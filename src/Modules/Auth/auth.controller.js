@@ -3,6 +3,7 @@ import * as authService from './auth.service.js';
 import { successResponse } from '../../Common/Response/response.js';
 import { validation } from '../../Middleware/validation.middleware.js';
 import { loginSchema, signupSchema } from './auth.validation.js';
+import { allowedFileFormats, localUpload } from '../../Common/Multer/multer.config.js';
 
 const authRouter = express.Router();
 
@@ -12,7 +13,8 @@ authRouter.get('/', (req, res) => {
 });
 
 authRouter.post('/signup', validation(signupSchema), async (req, res) => {
-    const result = await authService.signup(req.body);
+
+    const result = await authService.signup(req.vbody);
     return successResponse({ res, statusCode: 201, data: result });
 });
 
@@ -32,5 +34,12 @@ authRouter.post("/signup-otp", async (req, res) => {
     return successResponse({ res, statusCode: 201, data: result });
 });
 
+authRouter.post(
+    '/signup-upload' , 
+    localUpload({folderName : 'User' , 
+                allowedFileFormat : allowedFileFormats.img}).single('profilePic'),
+    async(req , res) => {
+        return successResponse({res , statusCode: 201 , data : 'Result'});
+    });
 
 export default authRouter;

@@ -5,12 +5,15 @@ import authRouter from './Modules/Auth/auth.controller.js';
 import { globalErrHandling } from './Common/Response/response.js';
 import userRouter from './Modules/User/user.contoller.js';
 import cors from 'cors';
+import path from 'node:path';
 
 async function bootstrap(){
     const app = express();    
     const port = SERVER_PORT;
     await testDBConnection();
     app.use(express.json() , cors());
+
+    app.use('/uploads' , express.static(path.resolve("./uploads")));
 
     app.use('/auth' , authRouter);
     app.use('/user' , userRouter);

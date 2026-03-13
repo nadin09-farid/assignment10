@@ -1,29 +1,35 @@
 import Joi from "joi"
+import { CommonFieldValidation } from "../../Middleware/validation.middleware.js";
 
-export const loginSchema = Joi.object({}).keys({
-    userName : Joi.string().alphanum().uppercase().messages({
-        "string.alphanum" : "userName cannot contain special chars",
-        "any.required" : "userName required",
-    }),
-    email : Joi.string().email().trim(),
-    password : Joi.string().min(6).max(18).required(),
+export const loginSchema = {
+    body: Joi
+    .object({})
+    .keys({
+    email : CommonFieldValidation.email.required(),
+    password : CommonFieldValidation.password.required(),
 })
-.xor("userName" , "email")
-.messages({
-    "object.missing" : "You must enter one those : 'userName  , email ' ",
-})
-.required();
+.required(),
+};
 
-export const signupSchema = Joi.object({}).keys({
-    userName : Joi.string().alphanum().uppercase().required().messages({
-        "string.alphanum" : "userName cannot contain special chars",
-        "any.required" : "userName required",
+//3amla el schema object w edenaha keys key lel data bta3t el body w key lel query data
+// 34an n3rf n access 3ala el schema bel keys deh fel validation middleware
+
+
+export const signupSchema = {
+    query : Joi.object({}).keys({
+        ln: Joi.string().valid('ar' , 'en' , 'fr').required(),
     }),
-    email : Joi.string().email().trim().required(),
-    password : Joi.string().min(6).max(18).required(),
+
+    body : Joi
+    .object({})
+    .keys({
+    userName : CommonFieldValidation.userName.required(),
+    email : CommonFieldValidation.email.required(),
+    password : CommonFieldValidation.password.required(),
     confirmPassword : Joi.string().valid(Joi.ref("password")).required(),
-    phone : Joi.string(),
-    DOB : Joi.date(),
-    gender: Joi.string().valid('male' , 'female'),
+    phone : CommonFieldValidation.phone,
+    DOB : CommonFieldValidation.DOB,
+    gender: CommonFieldValidation.gender,
 })
-.required();
+.required()
+};
