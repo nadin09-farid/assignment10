@@ -57,4 +57,5 @@ export const CommonFieldValidation = {
         ,
         DOB : Joi.date(),
         gender: Joi.string().valid(...Object.values(GenderEnum)),
+        role : Joi.string(),
 }

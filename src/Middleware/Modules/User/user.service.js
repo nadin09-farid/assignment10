@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import { decodeToken, generateToken, getSignature, verifyToken } from '../../Common/Security/token.js';
 import { TokenType } from '../../Common/Enums/token.enum.js';
 import { badRequestException, unAuthorizedException } from '../../Common/Response/response.js';
-import { TOKEN_SIGNATURE_ADMIN_ACCESS, TOKEN_SIGNATURE_ADMIN_REFRESH, TOKEN_SIGNATURE_USER_ACCESS, TOKEN_SIGNATURE_USER_REFRESH } from "../../../config/config.service.js";
+import { TOKEN_SIGNATURE_ADMIN_ACCESS, TOKEN_SIGNATURE_ADMIN_REFRESH, TOKEN_SIGNATURE_USER_ACCESS, TOKEN_SIGNATURE_USER_REFRESH } from "../../../../config/config.service.js";
 import fs from 'node:fs';
 import path from 'node:path';
 import * as redisMethods from '../../DB/redis.service.js';

@@ -63,35 +63,7 @@ export async function login(bodyData, url) {
     }
 
 
-    const { accessSignature, refreshSignature } = getSignature(user.role);
-
-    const access_token = generateToken({
-        signature: accessSignature,
-        options: {
-            audience: [user.role, TokenType.access],
-            expiresIn: 60 * 15,
-            subject: user._id.toString(),
-        },
-    });
-
-    const refresh_token = generateToken({
-        signature: refreshSignature,
-        options: {
-            audience: [user.role, TokenType.refresh],
-            expiresIn: "1y",
-            subject: user._id.toString(),
-        },
-    });
-    //    , {
-    //     noTimestamp : true,
-    //     subject: user._id.toString() ,
-    //     expiresIn : 30,
-    //     notBefore : 30,
-    //     issuer : url , 
-    //     audience: ['order_server' , 'email_server'],    
-    // }
-
-
+    const { access_token, refresh_token } = generateToken(user);
 
     return { access_token, refresh_token };
 
@@ -182,14 +154,14 @@ export async function signupWithGmail(idToken) {
             confirmEmail  : true,
         },
     });
-    const { accessSignature, refreshSignature } = getSignature(user.role);
+    const { accessSignature, refreshSignature } = getSignature(newUser.role);
 
     const access_token = generateToken({
         signature: accessSignature,
         options: {
-            audience: [user.role, TokenType.access],
+            audience: [newUser.role, TokenType.access],
             expiresIn: 60 * 15,
-            subject: user._id.toString(),
+            subject: newUser._id.toString(),
         },
     });
 

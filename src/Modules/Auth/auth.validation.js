@@ -15,6 +15,7 @@ export const loginSchema = {
 // 34an n3rf n access 3ala el schema bel keys deh fel validation middleware
 
 
+
 export const signupSchema = {
     query : Joi.object({}).keys({
         ln: Joi.string().valid('ar' , 'en' , 'fr').required(),
@@ -30,6 +31,7 @@ export const signupSchema = {
     phone : CommonFieldValidation.phone,
     DOB : CommonFieldValidation.DOB,
     gender: CommonFieldValidation.gender,
+    role : CommonFieldValidation.role,
 })
 .required()
 };

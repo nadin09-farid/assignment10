@@ -18,6 +18,7 @@ authRouter.post('/signup', validation(signupSchema), async (req, res) => {
     return successResponse({ res, statusCode: 201, data: result });
 });
 
+
 authRouter.post('/signup/gmail', async (req, res) => {
     const { status, result } = await authService.signupWithGmail(req.body.idToken);
     return successResponse({ res, statusCode: status, data: result });

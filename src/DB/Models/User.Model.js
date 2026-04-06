@@ -47,6 +47,7 @@ const userSchema = new mongoose.Schema(
         },
         // bnstore fel database el url bta3 el pic msh el sora nfsaha
         profile_pic: String,
+        cover_pics: [String],
         otp: {
             type: String
         },
@@ -58,6 +59,11 @@ const userSchema = new mongoose.Schema(
         isVerified: {
             type: Boolean,
             default: false
+        },
+        changeCreditTime: Date,
+        visitCount: {
+            type: Number,
+            default: 0
         }
     },
     {

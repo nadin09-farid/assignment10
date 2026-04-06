@@ -9,7 +9,7 @@ export const allowedFileFormats = {
     pdf : ['application/pdf'],
 };
 
-export function localUpload({folderName = "GeneralFiles" , allowedFileFormat = allowedFileFormats.img}){
+export function localUpload({folderName = "GeneralFiles" , allowedFileFormat = allowedFileFormats.img }){
     const storage = multer.diskStorage({
         destination: function(req , file , cb){
             const fullPath = `./uploads/${folderName}`;
@@ -18,17 +18,21 @@ export function localUpload({folderName = "GeneralFiles" , allowedFileFormat = a
                 mkdirSync(fullPath , {recursive : true});
             }
 
-            cb(null , path.resolve(fullPath));
+            cb(null , fullPath);
 
         },
         filename : function(req , file , cb){
-            const fileName = randomUUID + '_' + file.originalname;
+            const fileName = randomUUID() + '_' + file.originalname;
+            
+            file.finalPath = `uploads/${folderName}/${fileName}`;
             cb(null , fileName);
         },
     });
 
 
     function fileFilter (req , file , cb){
+            console.log("MIME TYPE:", file.mimetype); // 👈 مهم جدا
+
         if(!allowedFileFormat.includes(file.mimetype)){
             return cb(
                 new Error("Invalid Formate" , {cause : {statusCode : 400}}),
@@ -39,5 +43,7 @@ export function localUpload({folderName = "GeneralFiles" , allowedFileFormat = a
         return cb(null , true);
     }
 
-    return multer({storage , fileFilter});
+    return multer({
+        storage , 
+        fileFilter    });
 };
