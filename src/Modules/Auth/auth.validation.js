@@ -35,3 +35,63 @@ export const signupSchema = {
 })
 .required()
 };
+
+
+export const confirmEmailSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+        otp : CommonFieldValidation.OTP.required(),
+    })
+    .required(),
+};
+
+
+export const resendConfirmEmailSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+    })
+    .required(),
+};
+
+
+export const sendOTPForgetPasswordSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+    })
+    .required(),
+};
+
+export const confirm2FAotpSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+        otp : CommonFieldValidation.OTP.required(),
+        
+    })
+    .required(),
+};
+
+export const verifyOTPForgetPasswordSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+        otp : CommonFieldValidation.OTP.required(),
+    })
+    .required(),
+};
+
+
+export const resetPasswordSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+        otp : CommonFieldValidation.OTP.required(),
+        password : CommonFieldValidation.password.required(),
+    })
+    .required(),
+};
+
+
+export const resendOTPForgetPasswordSchema = {
+    body : Joi.object().keys({
+        email : CommonFieldValidation.email.required(),
+    })
+    .required(),
+};

@@ -1,4 +1,5 @@
 import joi from "joi";
+import { CommonFieldValidation } from "../../Middleware/validation.middleware.js";
 
 export const profilePicSchema = {
     file: joi
@@ -42,3 +43,11 @@ export const coverPicSchema = {
         .max(2)
         .required(),
 };
+
+export const updatePasswordSchema = {
+    body : joi.object({}).keys({
+        oldPassword : CommonFieldValidation.password.required(),
+        newPassword : CommonFieldValidation.password.required(),
+        confirmNewPassword : joi.string().valid(joi.ref('newPassword')).required(),
+    })
+}

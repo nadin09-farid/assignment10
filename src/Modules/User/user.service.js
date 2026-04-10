@@ -10,6 +10,7 @@ import { TOKEN_SIGNATURE_ADMIN_ACCESS, TOKEN_SIGNATURE_ADMIN_REFRESH, TOKEN_SIGN
 import fs from 'node:fs';
 import path from 'node:path';
 import * as redisMethods from '../../DB/redis.service.js';
+import { compareOperation, hashOperation } from '../../Common/Security/hash.js';
 
 
 
@@ -114,4 +115,28 @@ export async function logout(userId, tokenData, logoutOptions) {
             exValue: 60 * 60 * 24 * 365 - (Date.now() / 1000 - tokenData.iat),
         })
     }
+};
+
+export async function updatePassword(bodyData, userData) {
+    const {newPassword , oldPassword} = bodyData;
+    const {password} = userData;
+
+    const isOldPawwordValid = await compareOperation({
+        plainValue : oldPassword , 
+        hashedValue : password,
+    });
+
+
+    if (!isOldPawwordValid){
+        return badRequestException('Invalid old password');
+    };
+
+    await DBRepo.updateOne({
+        model: UserModel,
+        filter: { _id: userData._id },
+        data: { 
+            password : await hashOperation({plainText : newPassword}),
+            changeCreditTime : new Date(),
+        },
+    });
 };

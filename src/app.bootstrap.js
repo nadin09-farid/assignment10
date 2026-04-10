@@ -7,6 +7,7 @@ import userRouter from './Modules/User/user.contoller.js';
 import cors from 'cors';
 import path from 'node:path';
 import { testRedisConnection } from './DB/redis.connection.js';
+import { sendEmail } from './Common/Email/email.config.js';
 
 async function bootstrap(){
     const app = express();    
@@ -14,7 +15,6 @@ async function bootstrap(){
     await testDBConnection();
     await testRedisConnection();
 
-    
     app.use(express.json() , cors());
 
 // rednering a pic on the browser ------>  express.static

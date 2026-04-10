@@ -37,13 +37,14 @@ export const CommonFieldValidation = {
         .string()
         .pattern(new RegExp(/^[A-Z]{1}[a-z]{1,24}\s[A-Z]{1}[a-z]{1,24}$/)
     ),
-        email : Joi
-        .string()
-        .email()
-        .pattern(
-            new RegExp(/^\w{3,25}@(gmail|yahoo|outlook|icloud)(.com|.net|.co|.eg){1,4}$/)
-    ),
-        password : Joi
+        // email : Joi
+        // .string(),
+        // .email()
+        // .pattern(
+        //     new RegExp(/^\w{3,25}@(gmail|yahoo|outlook|icloud)(.com|.net|.co|.eg){1,4}$/)
+    // ),
+    email : Joi.string().trim(),
+    password : Joi
         .string()
         .pattern(
             new RegExp(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,16}/)
@@ -52,10 +53,9 @@ export const CommonFieldValidation = {
         .string()
         .pattern(
             new RegExp(/^(\+201|00201|01)(0|1|2|5)\d{8}$/)
-        )
-        
-        ,
+        ),
         DOB : Joi.date(),
         gender: Joi.string().valid(...Object.values(GenderEnum)),
         role : Joi.string(),
-}
+        OTP : Joi.string().pattern(new RegExp(/\d{6}/)),
+};

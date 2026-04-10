@@ -64,7 +64,11 @@ const userSchema = new mongoose.Schema(
         visitCount: {
             type: Number,
             default: 0
-        }
+        },
+        twoStepEnabled: {
+            type: Boolean, 
+            default: false 
+        },
     },
     {
         timestamps: true,

@@ -3,12 +3,11 @@ import { successResponse } from "../../Common/Response/response.js";
 import * as userService from './user.service.js';
 import { authentication } from '../../Middleware/authentication.middleware.js';
 import { TokenType } from '../../Common/Enums/token.enum.js';
-import { upload } from '../../Common/Multer/multer.js';
 import { allowedFileFormats, localUpload } from '../../Common/Multer/multer.config.js';
 import { validation } from '../../Middleware/validation.middleware.js';
 import { coverPicSchema } from './user.validation.js';
 import { isAdmin } from '../../Middleware/isAdmin.middleware.js';
-
+import { updatePasswordSchema } from './user.validation.js';
 const userRouter = express.Router();
 
 userRouter.get('/getUserProfile', authentication(), async (req, res) => {
@@ -69,6 +68,14 @@ userRouter.delete('/profile/image', authentication(), async (req, res) => {
     const result = await userService.removeProfileImage(req.user._id);
     return successResponse({ res, statusCode: 200, data: result });
 });
+
+userRouter.patch('/update-password', authentication(),
+    validation(updatePasswordSchema)
+    , async (req, res) => {
+        await userService.updatePassword(req.body, req.user);
+        return successResponse({ res,  data: 'Done' });
+    });
+
 
 userRouter.post('/logout', authentication(), async (req, res) => {
     const result = await userService.logout(req.user._id, req.tokenPayload);
