@@ -25,9 +25,26 @@ export async function exists(key) {
 export async function persist(key) {
     return await client.persist(key);
 };
+
 export async function del(keys) {
     return await client.del(keys);
 };
+
+export async function incr(key) {
+    return await client.incr(key);
+};
+
+export async function decr(key) {
+    return await client.decr(key);
+};
+
+export async function setExpire(key , value ) {
+    return await client.setEx(key , value);
+};
+
+
+
+
 /* aandi set bta5ood ai key w t create aadi bs ehna 34an n3ml update lazem el key da ykoon mwgood previously 
 34an n just n update el value                                                                              */
 export async function update(key , value) {
@@ -37,20 +54,8 @@ export async function update(key , value) {
     await client.set(key , value);
     return 1;
 };
+
+
 export function blackListTokenKey({userId , tokenId}){
     return `blackListToken::${userId}::${tokenId}`;
-};
-
-export function getOTPKey({email , emailType}){
-    return `OTP::${email}::${emailType}`;
-};
-
-export function getOTPReqNoKey({email , emailType}){
-    return `OTP::${email}::${emailType}::No`;
-};
-export function getOTPBlockedKey({email , emailType}){
-    return `OTP::${email}::${emailType}::Blocked`;
-};
-export async function incr(key) {
-    return await client.incr(key);
 };
